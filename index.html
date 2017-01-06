@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>10步掌握CSS定位: position static relative absolute float</title>
+    <link rel="stylesheet" href="css/tabber.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="css/tabber-print.css" type="text/css" media="print"/>
+    <style type="text/css" media="screen">
+        #example {
+            float: right;
+        }
+
+        #example div {
+        }
+
+        #div-before, #div-after {
+            background-color: #eee;
+            color: #000;
+        }
+
+        #div-1 {
+            width: 400px;
+            background-color: #000;
+            color: #fff;
+        }
+
+        #div-1-padding {
+            padding: 10px;
+        }
+
+        #div-1a {
+            background-color: #888;
+            color: #fff;
+        }
+
+        #div-1b {
+            background-color: #666;
+            color: #fff;
+        }
+
+        #div-1c {
+            background-color: #aaa;
+            color: #fff;
+        }
+
+        #example div p {
+            margin: 0 .25em;
+            padding: .25em 0;
+        }
+
+        #description {
+            float: left;
+            width: 40%;
+        }
+
+        pre {
+            padding: 1em;
+            border: 1px dashed #aaa;
+            background: #fafafa;
+        }
+
+        p {
+            margin: 0.5em 0;
+        }
+
+        h3 {
+            color: #999;
+        }
+    </style>
+    <link rel="alternate stylesheet" href="css/1.css"
+          type="text/css" title="1" media="screen"/>
+    <link rel="alternate stylesheet" href="css/2.css"
+          type="text/css" title="2" media="screen"/>
+    <link rel="alternate stylesheet" href="css/3.css"
+          type="text/css" title="3" media="screen"/>
+    <link rel="alternate stylesheet" href="css/4.css"
+          type="text/css" title="4" media="screen"/>
+    <link rel="alternate stylesheet" href="css/5.css"
+          type="text/css" title="5" media="screen"/>
+    <link rel="alternate stylesheet" href="css/6.css"
+          type="text/css" title="6" media="screen"/>
+    <link rel="alternate stylesheet" href="css/7.css"
+          type="text/css" title="7" media="screen"/>
+    <link rel="alternate stylesheet" href="css/8.css"
+          type="text/css" title="8" media="screen"/>
+    <link rel="alternate stylesheet" href="css/9.css"
+          type="text/css" title="9" media="screen"/>
+    <link rel="alternate stylesheet" href="css/10.css"
+          type="text/css" title="10" media="screen"/>
+    <script type="text/javascript">
+        function chooseStyle(title) {
+            setActiveStyleSheet(title);
+        }
+        var tabberOptions = {
+            onTabClick: function (tabIndex) {
+                chooseStyle(tabIndex + 1);
+            }
+        };
+    </script>
+    <script type="text/javascript" src="js/styleswitcher.js"></script>
+    <script type="text/javascript" src="js/tabber.js"></script>
+    <script type="text/javascript">
+        /* If the user has javascript, temporarily set the .tabber class to
+         display:none */
+        //document.write(unescape('%3Cstyle%20type%3D%22text/css%22%3E%0A.tabber%20%7B%20display%3Anone%3B%20%7D%0A%3C/style%3E%0A'));
+    </script>
+</head>
+<body>
+<table id="layout_table" cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr valign="top">
+        <td id="block_left_kludge"></td>
+        <td id="block_middle" width="100%" rowspan="2">
+            <div id="content">
+                <h1>10步掌握CSS定位: position static relative absolute float</h1>
+                <div id="description">
+                    <div class="tabber">
+                        <div id="text-1" class="tabbertab" title="1">
+                            <h2>1. position:static</h2>
+                            <p>元素的 position 屬性默認值為:<em>static</em>，即該元素出現在文檔的常規位置，不會重新定位。</p>
+                            <p>通常此屬性值可以不設置，除非是要覆蓋之前的定義。</p>
+                            <pre>#div-1 {
+ position:static;
+}
+</pre>
+                        </div>
+                        <div id="text-2" class="tabbertab" title="2">
+                            <h2>2. position:relative</h2>
+                            <p>設置了 <em>position:relative</em>，便可以結合<em>top</em> 、 <em>bottom</em>、 <em>left</em> 、 <em>right</em>
+                                的屬性來偏移其文檔的常規位置，就是相对于正常的位置进行移动。</p>
+                            <p>例如將 div-1 向下移動 20 像素、向左移動 40 像素:</p>
+                            <pre>#div-1 {
+ position:relative;
+ top:20px;
+ left:-40px;
+}
+</pre>
+                            <p>注意 div-1 未被移動之前的地方，現在多了一點空隙，緊接著 div-1 的元素(div-after)卻沒有被移動，事實上即便 div-1 被移動了，<strong>它仍佔據原始位置</strong>。
+                            </p>
+                            <p>貌似 <em>position:relative</em> 用處不大(我到覺得這點很有用)，但在後面的內容中顯得尤為重要。</p>
+                        </div>
+                        <div id="text-3" class="tabbertab" title="3">
+                            <h2>3. position:absolute</h2>
+                            <p>設置了 <em>position:absolute</em>，即絕對定位，便可以將元素放在文檔中任何想放的位置。</p>
+                            <p>例如將 div-1a 放置到右上角：</p>
+                            <pre>#div-1a {
+ position:absolute;
+ top:0;
+ right:0;
+ width:200px;
+}
+</pre>
+                            <p>注意！由於 div-1a 被移走, 頁面中的其他元素位置也變了： div-1b, div-1c, div-after 都因此上移了。</p>
+                            <p>div-1a 被放置在頁面的右上角。 能直接地定位元素很方便，但作用也不大。</p>
+                            <p>這裡真正要做的是將 div-1a <em>相對於</em> div-1 定位，這就又要講到 relative 屬性了。</p>
+                            <h3>注</h3>
+                            <ul>
+                                <li>IE瀏覽器Bug：設置了相對寬度(如 "width:50%")，該寬度將基於父元素而非自身。</li>
+                            </ul>
+                        </div>
+                        <div id="text-4" class="tabbertab" title="4">
+                            <h2>4. position:relative + position:absolute</h2>
+                            <p>設置div-1的位置為 <em>relative</em> ，
+                                div-1中元素的定位都將相對於div-1。現將div-1a的position設為:absolute，可以實現將其置於div-1的右上角：</p>
+                            <pre>#div-1 {
+ position:relative;
+}
+#div-1a {
+ position:absolute;
+ top:0;
+ right:0;
+ width:200px;
+}
+</pre>
+                        </div>
+                        <div id="text-5" class="tabbertab" title="5">
+                            <h2>5. 兩列絕對定位</h2>
+                            <p>接下來使用relative 和absolute 實現兩列的絕對定位：</p>
+                            <pre>#div-1 {
+ position:relative;
+}
+#div-1a {
+ position:absolute;
+ top:0;
+ right:0;
+ width:200px;
+}
+#div-1b {
+ position:absolute;
+ top:0;
+ left:0;
+ width:200px;
+}
+</pre>
+                            <p>使用絕對定位(absolute positioning)的優點就是不需考慮元素在html中的位置，可以對元素任意放置，此處故意將div-1b放到div-1a之前；</p>
+                            <p>注意，還有個元素被絕對定位的元素遮住了，怎麼辦？</p>
+                        </div>
+                        <div id="text-6" class="tabbertab" title="6">
+                            <h2>6. two column absolute height</h2>
+                            <p>一種辦法是設置固定高度。</p>
+                            <p>但不是萬全之策，因為元素的高度、字體的大小並不總是確定的。</p>
+                            <pre>#div-1 {
+ position:relative;
+ height:250px;
+}
+#div-1a {
+ position:absolute;
+ top:0;
+ right:0;
+ width:200px;
+}
+#div-1b {
+ position:absolute;
+ top:0;
+ left:0;
+ width:200px;
+}
+</pre>
+                        </div>
+                        <div id="text-7" class="tabbertab" title="7">
+                            <h2>7. float(浮動)</h2>
+                            <p>針對高度不定的情況，絕對定位不好用，於是想到另一方案。</p>
+                            <p>可以盡量使用向左或向右浮動來實現文字環繞，特別是環繞圖片，此處用於更複雜的佈局工作(也只有用這種方法)。</p>
+                            <pre>#div-1a {
+ float:left;
+ width:200px;
+}
+</pre>
+                        </div>
+                        <div id="text-8" class="tabbertab" title="8">
+                            <h2>8. 多列浮動</h2>
+                            <p>將兩列都像左浮動，可以實現兩列並列。</p>
+                            <pre>#div-1a {
+ float:left;
+ width:150px;
+}
+#div-1b {
+ float:left;
+ width:150px;
+}
+</pre>
+                        </div>
+                        <div id="text-9" class="tabbertab" title="9">
+                            <h2>9. 多列浮動後清除浮動</h2>
+                            <p>將元素浮動後，再使用"clear" 清除浮動，後面內容拉向下。</p>
+                            <pre>#div-1a {
+ float:left;
+ width:190px;
+}
+#div-1b {
+ float:left;
+ width:190px;
+}
+#div-1c {
+ clear:both;
+}
+</pre>
+                        </div>
+                        <div id="text-10" class="tabbertab" title="10">
+                            <h2>10. Disclaimer & Resources</h2>
+                            <p>These examples are extremely simplified and do not trigger some of the CSS bugs in the
+                                Windows IE browser (of which there are <em>many</em>).</p>
+                            <p>The following page was invaluable:<br/>
+                                <a href="http://www.autisticcuckoo.net/archive.php?id=2004/12/07/relatively-absolute">Relatively
+                                    Absolute</a></p>
+                            <p>While you're here check out the following:</p>
+                            <ul>
+                                <li><a href="http://www.barelyfitz.com/projects/">BarelyFitz Designs Open-Source
+                                    Software Projects</a></li>
+                                <li><a href="http://www.barelyfitz.com/screencast/">BarelyFitz Designs Screencasts</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /class=tabber -->
+
+                </div>
+                <!-- /id="description -->
+                <div id="example">
+                    <div id="div-before">
+                        <p>id = div-before</p>
+                    </div>
+                    <div id="div-1">
+                        <div id="div-1-padding">
+                            <p>id = div-1</p>
+                            <div id="div-1a">
+                                <p>id = div-1a</p>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer pretium dui sit
+                                    amet felis. Integer sit amet diam. Phasellus ultrices viverra velit.</p>
+                            </div>
+                            <div id="div-1b">
+                                <p>id = div-1b</p>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer pretium dui sit
+                                    amet felis. Integer sit amet diam. Phasellus ultrices viverra velit. Nam mattis,
+                                    arcu ut bibendum commodo, magna nisi tincidunt tortor, quis accumsan augue ipsum id
+                                    lorem.</p>
+                            </div>
+                            <div id="div-1c">
+                                <p>id = div-1c</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /id=div-1-padding /id=div-1 -->
+                    <div id="div-after">
+                        <p>id = div-after</p>
+                    </div>
+                </div>
+                <!-- /id=example -->
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+    <tr valign="top">
+        <td colspan="3"></td>
+    </tr>
+</table>
+</body>
+</html>
